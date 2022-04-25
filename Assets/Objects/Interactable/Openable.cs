@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -18,12 +16,14 @@ public class Openable : Interactable
             SpriteRender.sprite = Open;
 
         isOpen = !isOpen;
+
+        PolygonCollider2D collider = SpriteRender.GetComponent<PolygonCollider2D>();
+        collider.TryUpdateShapeToAttachedSprite();
     }
 
-    private void Start() {
-        {
-            SpriteRender = GetComponent<SpriteRenderer>();
-            SpriteRender.sprite = Closed;
-        }
+    private void Start()
+    {
+        SpriteRender = GetComponent<SpriteRenderer>();
+        SpriteRender.sprite = Closed;
     }
 }

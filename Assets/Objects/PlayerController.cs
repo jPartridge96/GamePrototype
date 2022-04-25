@@ -11,6 +11,11 @@ public class PlayerController : MonoBehaviour
     public Animator InventoryAnimation;
     public GameObject InteractIcon;
 
+    void Start()
+    {
+        InteractIcon.SetActive(false);
+    }
+
     // Determine what input is being received
     void Update()
     {
@@ -70,21 +75,26 @@ public class PlayerController : MonoBehaviour
     {
         if(!Busy)
         {
-            // Player
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, _interactRange, 0, Vector2.zero);
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            // Mouse
-            RaycastHit2D[] mouseHits = Physics2D.BoxCastAll(Input.mousePosition, _interactRange, 0, Vector2.zero);
+            RaycastHit2D[] playerHits = Physics2D.BoxCastAll(transform.position, _playerInteractRange, 0, Vector2.zero);    // Player in range
+            RaycastHit2D[] mouseHits = Physics2D.BoxCastAll(mousePosition, _mouseInteractRange, 0, Vector2.zero);     // Mouse in range
 
-            if(hits.Length > 0)
+            if(playerHits.Length > 0 && mouseHits.Length > 0)
             {
-                foreach(RaycastHit2D hit in hits)
+                // Checks each entity player is near whether if mouse is in range
+                foreach(RaycastHit2D pHit in playerHits)
                 {
-                    if(hit.transform.GetComponent<Interactable>() && !Busy)
+                    foreach(RaycastHit2D mHit in mouseHits)
                     {
-                        hit.transform.GetComponent<Interactable>().Interact();
-                        return;
+                        if(pHit.transform.GetComponent<Interactable>() && mHit.transform.GetComponent<Interactable>() && !Busy)
+                        {
+                            // Will only interact if mouse is hovering over Interactable
+                            mHit.transform.GetComponent<Interactable>().Interact();
+                            return;
+                        }
                     }
+                    
                 }
             }
         }
@@ -97,5 +107,6 @@ public class PlayerController : MonoBehaviour
     }
 
     private Vector2 _movement;
-    private Vector2 _interactRange = new Vector2(1f, 1f);
+    private Vector2 _playerInteractRange = new Vector2(1f, 1f);
+    private Vector2 _mouseInteractRange = new Vector2(0.1f, 0.1f);
 }

@@ -44,6 +44,7 @@
      <Compile Include="Assets\Objects\Interactable\NPCController.cs" />
      <Compile Include="Assets\Objects\PlayerController.cs" />
      <Compile Include="Assets\Objects\Dialogue\DialogueManager.cs" />
+     <Compile Include="Assets\Objects\Collider2DExtensions.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.30f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
