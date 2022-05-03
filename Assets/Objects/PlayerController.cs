@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
             CheckInteraction();
 
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Input.GetButtonDown("Inventory"))
             ToggleInventory();
 
         _movement.x = Input.GetAxisRaw("Horizontal");
